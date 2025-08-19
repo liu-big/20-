@@ -1,0 +1,8 @@
+prefix=/home/liu/ucar_ws/gazebo_test_ws/install
+
+Name: gazebo_map
+Description: Description of gazebo_map
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

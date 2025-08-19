@@ -1,0 +1,7 @@
+<launch>
+    <node pkg="task_controller" type="find_and_approach.py" name="task_controller_node" output="screen"/>
+
+    <node pkg="task_controller" type="vision_processor.py" name="vision_processor_node" output="screen">
+        <param name="camera_topic" value="/cam"/>
+    </node>
+</launch>

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/liu/ucar_ws/gazebo_test_ws/install/setup.sh

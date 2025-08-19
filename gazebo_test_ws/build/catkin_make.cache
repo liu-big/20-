@@ -1,0 +1,2 @@
+gazebo_map:gazebo_nav:gazebo_pkg:task_controller
+-DCATKIN_DEVEL_PREFIX=/home/liu/ucar_ws/gazebo_test_ws/devel -DCMAKE_INSTALL_PREFIX=/home/liu/ucar_ws/gazebo_test_ws/install -G Unix Makefiles

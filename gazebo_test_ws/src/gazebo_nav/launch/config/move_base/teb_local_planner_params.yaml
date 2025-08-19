@@ -1,0 +1,71 @@
+# teb_local_planner_params.yaml (V2 - 针对薄壁障碍物优化)
+
+TebLocalPlannerROS:
+  # ================= Trajectory Options =================
+  teb_autosize: true
+  dt_ref: 0.3
+  dt_hysteresis: 0.1
+  global_plan_overwrite_orientation: true
+  max_global_plan_lookahead_dist: 2.0 # 稍微减小前瞻距离，让其更专注于当前路段
+  feasibility_check_no_poses: 4
+
+  # ================= Robot_Options =================
+  max_vel_x: 2.0
+  max_vel_x_backwards: 0.1
+  max_vel_y: 0.0
+  max_vel_theta: 1.2
+  acc_lim_x: 1.0
+  acc_lim_y: 0.0
+  acc_lim_theta: 1.0
+  min_turning_radius: 0.2
+
+  # ================= Goal Tolerance =================
+  xy_goal_tolerance: 0.1
+  yaw_goal_tolerance: 0.05
+  free_goal_vel: false
+
+  # ================= Obstacle Options =================
+  min_obstacle_dist: 0.1 # [关键优化] 适当减小安全距离，让机器人在狭窄空间有解
+  include_costmap_obstacles: true
+  costmap_obstacles_behind_robot_dist: 1.5
+  obstacle_poses_affected: 20
+  
+  # [新增优化] 指定机器人轮廓模型，对于精确避障很重要
+  footprint_model:
+    type: "polygon"
+    vertices: [[0.171, -0.128], [0.171, 0.128], [-0.171, 0.128], [-0.171, -0.128]] # 从costmap_common中复制过来 # 对于差速或全向轮机器人，"point"模型计算效率高。也可设为"circular"或"two_circles"
+    # radius: 0.2 # 如果是 circular, 在此指定半径
+    # front_offset: 0.2 # 如果是 two_circles, 指定前后圆心偏移
+    # front_radius: 0.2
+    # rear_offset: 0.2
+    # rear_radius: 0.2
+
+  # ================= Optimization Options =================
+  no_inner_iterations: 5
+  no_outer_iterations: 4
+  optimization_activate: true
+  optimization_verbose: false
+  penalty_epsilon: 0.1
+  
+  # [关键优化] 调整优化器的权重，解决犹豫问题
+  weight_max_vel_x: 2
+  weight_max_vel_theta: 1
+  weight_acc_lim_x: 1
+  weight_acc_lim_theta: 1
+  weight_kinematics_nh: 1000  # [关键优化] 提高此权重使机器人更倾向于非完整运动学（即能原地转），有助于解困
+  weight_kinematics_forward_drive: 600
+  weight_kinematics_turning_radius: 1
+  weight_optimaltime: 5.0     # [关键优化] 这是让路径时间最短的权重，是效率的关键
+  weight_obstacle: 20.0       # [关键优化] 降低此权重，让机器人不至于对障碍物“过度恐惧”
+  weight_viapoint: 1.0        # [新增优化] 提高此权重，让局部路径更严格地跟随全局路径，减少摇摆
+
+  # ================= Homotopy Class Planner =================
+  # [关键优化] 针对赛道这类路径明确的场景，关闭多路径探索是最高效的优化手段
+  enable_homotopy_class_planning: false # 设置为 false 能极大减少在薄壁前的计算时间
+  enable_multithreading: true
+  simple_exploration: false
+  max_number_of_voronoi_paths: 1 # 关闭多路径探索后，这里设为1即可
+
+  # ================= Misc =================
+  odom_topic: odom
+  map_frame: map

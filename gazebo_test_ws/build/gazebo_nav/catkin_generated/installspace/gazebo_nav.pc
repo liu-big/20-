@@ -1,0 +1,8 @@
+prefix=/home/liu/ucar_ws/gazebo_test_ws/install
+
+Name: gazebo_nav
+Description: Description of gazebo_nav
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/liu/ucar_ws/gazebo_test_ws/install
+
+Name: task_controller
+Description: Description of task_controller
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

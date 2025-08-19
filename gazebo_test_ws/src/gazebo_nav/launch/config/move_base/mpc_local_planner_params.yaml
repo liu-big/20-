@@ -1,0 +1,30 @@
+# mpc_local_planner_params.yaml (v5 - 高速巡逻优化版)
+MpcLocalPlannerROS:
+  model_type: "differential"
+  robot_base_frame: base_link
+  global_frame: map
+  odom_topic: odom
+  controller_frequency: 10.0
+  prediction_horizon: 2.0
+  control_horizon: 1.0
+  dt: 0.1
+  max_linear_vel: 1.2
+  max_angular_vel: 1.5
+  max_linear_accel: 1.0
+  max_angular_accel: 1.0
+  # --- 权重微调 ---
+  linear_vel_weight: 25.0
+  angular_vel_weight: 6.0       # [优化] 增加角速度惩罚，高速转弯时更稳定
+  linear_accel_weight: 2.0
+  angular_accel_weight: 15.0
+  goal_dist_weight: 25.0
+  path_dist_weight: 35.0
+  goal_angle_weight: 10.0
+  obstacle_weight: 15.0
+  # --- 其他参数 ---
+  path_look_ahead_dist: 0.6
+  path_turn_look_ahead_dist: 0.4
+  allow_backwards: false
+  xy_goal_tolerance: 0.10
+  yaw_goal_tolerance: 0.15
+  publish_plan: true
